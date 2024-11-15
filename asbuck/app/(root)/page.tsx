@@ -28,7 +28,7 @@ export default async function Home({ searchParams }: {
         </p>
         <ul className="mt-7 card_grid">
           {posts?.length > 0 ? (
-            posts.map((post: IdeaCardType) => (<IdeaCard key={post?._id} post={post} />))
+            posts.map((post: any) => (<IdeaCard key={post?._id} post={post} />))
           ) : (<p className="no-results">No idea found...</p>)}
         </ul>
       </section>

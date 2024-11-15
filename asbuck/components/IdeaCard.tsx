@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "./ui/button"
 
-const IdeaCard = ({ post }: { post: IdeaCardType }) => {
+const IdeaCard = ({ post }: { post: any }) => {
     const { _createdAt, views, author: { _id: au_id, name }, title, category, _id, description, image } = post;
     return (
         <li className="startup-card group ">
