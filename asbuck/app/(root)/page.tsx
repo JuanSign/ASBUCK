@@ -1,20 +1,16 @@
-import IdeaCard from "@/components/IdeaCard";
+import IdeaCard, { IdeaTypeCard } from "@/components/IdeaCard";
 import SearchForm from "../../components/SearchForm";
+import { IDEAS_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({ searchParams }: {
   searchParams: Promise<{ query?: string }>
 }) {
   const query = (await searchParams).query;
-  const posts = [{
-    _createdAt: new Date(),
-    views: 55,
-    author: { _id: 1, name: 'meli' },
-    _id: 1,
-    description: 'this is a description',
-    image: "https://cdn.britannica.com/16/254816-050-41C9577A/Google-logo-Googleplex-headquarters-Mountain-View-California.jpg?w=385",
-    category: "Robots",
-    title: "We Robots"
-  }]
+  const params = { search: query || null };
+
+  const { data: posts } = await sanityFetch({ query: IDEAS_QUERY, params });
+
   return (
     <>
       <section className="grey_container">
@@ -28,10 +24,11 @@ export default async function Home({ searchParams }: {
         </p>
         <ul className="mt-7 card_grid">
           {posts?.length > 0 ? (
-            posts.map((post: any) => (<IdeaCard key={post?._id} post={post} />))
+            posts.map((post: IdeaTypeCard) => (<IdeaCard key={post?._id} post={post} />))
           ) : (<p className="no-results">No idea found...</p>)}
         </ul>
       </section>
+      <SanityLive />
     </>
   );
 }
